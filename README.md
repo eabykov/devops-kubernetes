@@ -1,8 +1,8 @@
-1. Install metrics-server by command:
+1. Install [metrics-server](https://github.com/kubernetes-sigs/metrics-server) by command:
 ```shell
 kubectl apply -f https://github.com/kubernetes-sigs/metrics-server/releases/latest/download/components.yaml
 ```
-2. Add `--kubelet-insecure-tl` to `command` section of the `metrics-server`
+2. Add `--kubelet-insecure-tl` to `command` section of the `metrics-server` deployment
 
 ```yaml
 ---
