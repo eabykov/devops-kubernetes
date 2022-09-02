@@ -101,5 +101,5 @@ kubectl run -i --tty load-generator --rm --image=busybox:1.35 --restart=Never --
 ```
 5. See the higher CPU load
 ```shell
-kubectl get hpa php-apache --watch
+kubectl get hpa nginx --watch
 ```
