@@ -94,6 +94,7 @@ spec:
             port: 80
           initialDelaySeconds: 5
           periodSeconds: 5
+---
 ```
 4. Increase the load on the `nginx`
 ```shell
