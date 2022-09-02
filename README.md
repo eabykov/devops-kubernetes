@@ -2,7 +2,7 @@
 ```shell
 kubectl apply -f https://github.com/kubernetes-sigs/metrics-server/releases/latest/download/components.yaml
 ```
-2. Add `--kubelet-insecure-tl` to the `command` section of the `metrics-server` deployment
+2. Add `--kubelet-insecure-tls` to the `command` section of the `metrics-server` deployment
 3. Copy and apply yaml:
 ```yaml
 ---
