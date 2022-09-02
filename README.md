@@ -1,4 +1,4 @@
-```
+```yaml
 ---
 apiVersion: autoscaling/v2
 kind: HorizontalPodAutoscaler
