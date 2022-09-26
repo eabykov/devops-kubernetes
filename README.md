@@ -30,7 +30,6 @@ kind: Service
 metadata:
   name: nginx
 spec:
-  clusterIP: "None"
   selector:
     app.kubernetes.io/name: nginx
   ports:
