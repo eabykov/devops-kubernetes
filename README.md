@@ -1,9 +1,11 @@
-1. Install [metrics-server](https://github.com/kubernetes-sigs/metrics-server) by command:
+1. Install [metrics-server](https://github.com/kubernetes-sigs/metrics-server) by helm:
 ```shell
-kubectl apply -f https://github.com/kubernetes-sigs/metrics-server/releases/latest/download/components.yaml
+helm repo add metrics-server https://kubernetes-sigs.github.io/metrics-server/
 ```
-2. Add `--kubelet-insecure-tls` to the `args` section of the `metrics-server` deployment
-3. Copy and apply yaml:
+```shell
+helm upgrade --install metrics-server metrics-server/metrics-server --set args={"--kubelet-insecure-tls"}
+```
+2. Copy and apply yaml:
 ```yaml
 ---
 apiVersion: autoscaling/v2
