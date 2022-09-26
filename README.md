@@ -11,12 +11,12 @@ helm upgrade --install metrics-server metrics-server/metrics-server --set args={
 apiVersion: autoscaling/v2
 kind: HorizontalPodAutoscaler
 metadata:
-  name: nginx
+  name: loki
 spec:
   scaleTargetRef:
     apiVersion: apps/v1
     kind: Deployment
-    name: nginx
+    name: loki
   minReplicas: 3
   maxReplicas: 4
   metrics:
@@ -30,10 +30,10 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: nginx
+  name: loki
 spec:
   selector:
-    app.kubernetes.io/name: nginx
+    app.kubernetes.io/name: loki
   ports:
     - protocol: TCP
       port: 80
@@ -42,20 +42,20 @@ spec:
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: nginx
+  name: loki
   labels:
-    app.kubernetes.io/name: nginx
-    app.kubernetes.io/version: 1.23.1-alpine
-    app.kubernetes.io/component: website
+    app.kubernetes.io/name: loki
+    app.kubernetes.io/version: 2.6.1
+    app.kubernetes.io/component: loki
 spec:
   replicas: 3
   selector:
     matchLabels:
-      app.kubernetes.io/name: nginx
+      app.kubernetes.io/name: loki
   template:
     metadata:
       labels:
-        app.kubernetes.io/name: nginx
+        app.kubernetes.io/name: loki
     spec:
       affinity:
         podAntiAffinity:
@@ -67,15 +67,15 @@ spec:
                 - key: app.kubernetes.io/name
                   operator: In
                   values:
-                  - nginx
+                  - loki
               topologyKey: "topology.kubernetes.io/zone"
       terminationGracePeriodSeconds: 60
       containers:
-      - name: nginx
-        image: nginx:1.23.1-alpine
+      - name: loki
+        image: grafana/loki:2.6.1
         ports:
         - name: http
-          containerPort: 80
+          containerPort: 3100
         resources: 
           requests:
             memory: "150Mi"
@@ -85,13 +85,13 @@ spec:
         livenessProbe:
           httpGet:
             path: /
-            port: 80
+            port: 3100
           initialDelaySeconds: 5
           periodSeconds: 5
         readinessProbe:
           httpGet:
             path: /
-            port: 80
+            port: 3100
           initialDelaySeconds: 5
           periodSeconds: 5
 ---
