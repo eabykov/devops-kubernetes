@@ -72,7 +72,7 @@ spec:
       terminationGracePeriodSeconds: 60
       containers:
       - name: grafana
-        image: grafana/grafana::9.1.5
+        image: grafana/grafana:9.1.5
         ports:
         - name: http
           containerPort: 3000
