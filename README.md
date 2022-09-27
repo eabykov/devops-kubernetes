@@ -11,12 +11,12 @@ helm upgrade --install metrics-server metrics-server/metrics-server --set args={
 apiVersion: autoscaling/v2
 kind: HorizontalPodAutoscaler
 metadata:
-  name: loki
+  name: grafana
 spec:
   scaleTargetRef:
     apiVersion: apps/v1
     kind: Deployment
-    name: loki
+    name: grafana
   minReplicas: 3
   maxReplicas: 4
   metrics:
@@ -30,10 +30,10 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: loki
+  name: grafana
 spec:
   selector:
-    app.kubernetes.io/name: loki
+    app.kubernetes.io/name: grafana
   ports:
     - protocol: TCP
       port: 80
@@ -42,20 +42,20 @@ spec:
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: loki
+  name: grafana
   labels:
-    app.kubernetes.io/name: loki
-    app.kubernetes.io/version: 2.6.1
-    app.kubernetes.io/component: loki
+    app.kubernetes.io/name: grafana
+    app.kubernetes.io/version: 9.1.5
+    app.kubernetes.io/component: grafana
 spec:
   replicas: 3
   selector:
     matchLabels:
-      app.kubernetes.io/name: loki
+      app.kubernetes.io/name: grafana
   template:
     metadata:
       labels:
-        app.kubernetes.io/name: loki
+        app.kubernetes.io/name: grafana
     spec:
       affinity:
         podAntiAffinity:
@@ -67,15 +67,15 @@ spec:
                 - key: app.kubernetes.io/name
                   operator: In
                   values:
-                  - loki
+                  - grafana
               topologyKey: "topology.kubernetes.io/zone"
       terminationGracePeriodSeconds: 60
       containers:
-      - name: loki
-        image: grafana/loki:2.6.1
+      - name: grafana
+        image: grafana/grafana::9.1.5
         ports:
         - name: http
-          containerPort: 3100
+          containerPort: 3000
         resources: 
           requests:
             memory: "150Mi"
@@ -85,13 +85,13 @@ spec:
         livenessProbe:
           httpGet:
             path: /
-            port: 3100
+            port: 3000
           initialDelaySeconds: 5
           periodSeconds: 5
         readinessProbe:
           httpGet:
             path: /
-            port: 3100
+            port: 3000
           initialDelaySeconds: 5
           periodSeconds: 5
 ---
