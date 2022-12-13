@@ -1,4 +1,4 @@
-### Установка Kubenretes локально
+### Установка Kubernetes локально
 
 1. Ставим себе `Docker Desktop` https://www.docker.com/products/docker-desktop/
 2. Ставим себе `WSL` (штука для работы с Linux) https://aka.ms/wslinstall
@@ -8,7 +8,7 @@
 6. Запускаем `Docker Desktop`
 7. Подключаем `Ubuntu` к `Docker Desctop`. Для этого в его настройках переходим в раздел `Resorces` и там в `WSL Integration` включаем интеграцию с `Ubuntu`
 8. Включаем `Kubernetes` там же в настройках `Docker Desctop` (если хотим смотреть за прогрессом загрузки выходим из настроек и смотрим как появляются новые Images)
-9. Когда у нас иконка `Kubernetes` внизу станет зеленой это значит что мы можем зайти в `Ubuntu` и выполнить команду `kubectl version --short` которая выведет версии `Kubenretes`
+9. Когда у нас иконка `Kubernetes` внизу станет зеленой это значит что мы можем зайти в `Ubuntu` и выполнить команду `kubectl version --short` которая выведет версии `Kubernetes`
 
 ### Составляющие Kubernetes кластера
 
