@@ -2,7 +2,7 @@
 
 1. Ставим себе `Docker Desktop` https://www.docker.com/products/docker-desktop/
 2. Ставим себе `WSL` (штука для работы с Linux) https://aka.ms/wslinstall
-3. Ставим себе `Ubuntu` из `Microsoft Store` https://www.microsoft.com/store/productId/9PN20MSR04DW
+3. Ставим себе `Ubuntu` из `Microsoft Store` https://apps.microsoft.com/store/search?publisher=Canonical%20Group%20Limited
 4. Перезапускаем компьютер
 5. Ждем пока `WSL` доустановится
 6. Запускаем `Docker Desktop`
