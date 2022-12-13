@@ -41,8 +41,8 @@
 - configmap https://kubernetes.io/docs/concepts/configuration/configmap/
 - secret https://kubernetes.io/docs/concepts/configuration/secret/
 
-
-### Пример обьектов Kubenretes
+<details>
+  <summary>Пример обьектов Kubenretes</summary>
 
 ```yaml
 ---
@@ -133,3 +133,5 @@ spec:
           initialDelaySeconds: 5
           periodSeconds: 5
 ```
+
+</details>
