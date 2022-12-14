@@ -55,6 +55,71 @@ metadata:
 > - annotations (аннотации) похожи на лейблы, но не используются для идентификации и выбора объектов https://kubernetes.io/ru/docs/concepts/overview/working-with-objects/annotations/
 
 - deployment https://kubernetes.io/docs/concepts/workloads/controllers/deployment/
+
+<details>
+  <summary>Пример обьектов Kubenretes</summary>
+
+```yaml
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: nginx-deployment
+  labels: # используются для идентификации и выбора объектов
+    app.kubernetes.io/name: nginx-deployment
+    app.kubernetes.io/version: latest
+    app.kubernetes.io/component: nginx-deployment
+spec:
+  replicas: 3 # можно удалить если используем HPA который сам будет следить за числом реплик
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: nginx-deployment
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: nginx-deployment
+    spec:
+      affinity:
+        podAntiAffinity: # анти зависимость чтобы реплики pod разьехались по разным node
+          preferredDuringSchedulingIgnoredDuringExecution: 
+          - weight: 100
+            podAffinityTerm:
+              labelSelector:
+                matchExpressions:
+                - key: app.kubernetes.io/name
+                  operator: In
+                  values:
+                  - nginx-deployment # создавать на node где нет pod с лейблом app.kubernetes.io/name: nginx-deployment
+              topologyKey: "topology.kubernetes.io/zone" # стараться размещать pod в разных зонах доступности
+      terminationGracePeriodSeconds: 60 # после отправки приложению сигнала 'Заверши работу' даем ему 60 сек закончить свою работу и умереть, иначе убиваем
+      containers:
+      - name: nginx
+        image: nginx:latest
+        ports:
+        - name: http
+          containerPort: 8080
+        resources:
+          requests: # запросы ресурсов по которым kube-scheduler ищет на какую node разместить pod
+            memory: "150Mi"
+            cpu: "250m"
+          limits:
+            memory: "150Mi" # если приложение попытается использовать больше памяти, Kubernetes убьет его
+            cpu: "500m" # если приложение попытается использовать больше ресурсов CPU поставит его в очередь xD
+        livenessProbe: # проверяет 'живо ли приложение' и если нет, перезапускает его
+          httpGet:
+            path: /
+            port: http
+          initialDelaySeconds: 5
+          periodSeconds: 5
+        readinessProbe: # проверяет 'может ли приложение принимать запросы'
+          httpGet:
+            path: /
+            port: http
+          initialDelaySeconds: 5
+          periodSeconds: 5
+```
+
+</details>
+
 - statefulset https://kubernetes.io/docs/concepts/workloads/controllers/statefulset/
 - daemonset https://kubernetes.io/docs/concepts/workloads/controllers/daemonset/
 - `job` (задания) https://kubernetes.io/docs/concepts/workloads/controllers/job/
@@ -64,6 +129,27 @@ metadata:
 ##### Сетевые функции
 
 - `service` одно DNS имя которым обьеденен набор pod (используя лейблы на pod) https://kubernetes.io/docs/concepts/services-networking/service/
+
+<details>
+  <summary>Пример обьекта Service</summary>
+
+```yaml
+apiVersion: v1
+kind: Service
+metadata:
+  name: <insert-service-name-here> # одно DNS имя которым обьеденен набор pod (используя лейблы на pod в selector ниже)
+spec:
+  selector:
+    app.kubernetes.io/name: <insert-lable-name-here> # выбирает pod по лейблу
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: http
+```
+
+</details>
+
+
 - `ingress` управляет внешним доступом к службам в кластере https://kubernetes.io/docs/concepts/services-networking/ingress/
 
 ##### Диски, конфигурация и секреты
@@ -95,18 +181,6 @@ spec:
       target:
         type: Utilization
         averageUtilization: 50
----
-apiVersion: v1
-kind: Service
-metadata:
-  name: nginx-echo-headers # одно DNS имя которым обьеденен набор pod (используя лейблы на pod в selector ниже)
-spec:
-  selector:
-    app.kubernetes.io/name: nginx-echo-headers
-  ports:
-    - protocol: TCP
-      port: 80
-      targetPort: http
 ---
 apiVersion: apps/v1
 kind: Deployment
