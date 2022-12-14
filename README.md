@@ -12,7 +12,7 @@
 
 ### Составляющие Kubernetes кластера
 
-- Из чего состоит сам Kubernetes https://kubernetes.io/ru/docs/concepts/overview/components/
+- Из чего состоит (компоненты, составляющие) Kubernetes https://kubernetes.io/ru/docs/concepts/overview/components/
 - Структура объектов и что они из себя представляют https://kubernetes.io/ru/docs/concepts/overview/working-with-objects/kubernetes-objects/
 - namespace - виртуальные кластера в одном физическом кластере Kubernetes (Имена ресурсов должны быть уникальными в пределах одного и того же пространства имён) 
 
