@@ -57,7 +57,7 @@ metadata:
 - deployment https://kubernetes.io/docs/concepts/workloads/controllers/deployment/
 
 <details>
-  <summary>Пример обьектов Kubenretes</summary>
+  <summary>Пример обьекта Deployment</summary>
 
 ```yaml
 apiVersion: apps/v1
