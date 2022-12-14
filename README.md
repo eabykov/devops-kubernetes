@@ -69,7 +69,7 @@ metadata:
     app.kubernetes.io/version: latest
     app.kubernetes.io/component: nginx-deployment
 spec:
-  replicas: 3 # можно удалить если используем HPA который сам будет следить за числом реплик
+  replicas: 3 # можно удалить если используем HPA который сам будет следить за числом реплик (описание и пример ниже)
   selector:
     matchLabels:
       app.kubernetes.io/name: nginx-deployment
