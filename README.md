@@ -37,6 +37,18 @@ worker node (исполнительный уровень) https://kubernetes.io/
 
 - `namespace` (пространство имен) - виртуальные кластера в одном физическом кластере Kubernetes, нужны чтобы изолировать группы обьектов в одном кластере (Имена ресурсов должны быть уникальными в пределах одного и того же namespace) 
 
+<details>
+  <summary>Пример обьекта Namespace</summary>
+
+```yaml
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: <insert-namespace-name-here> # имя namespace
+```
+
+</details>
+
 ##### Запуск приложений, заданий и управление ими
 
 > - labels (метки, этикетки) которые используются для идентификации и выбора объектов https://kubernetes.io/ru/docs/concepts/overview/working-with-objects/labels/
