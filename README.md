@@ -126,6 +126,32 @@ spec:
 - `cronjob` (задание по расписанию) https://kubernetes.io/docs/concepts/workloads/controllers/cron-jobs/
 - HPA автоматическое увеличение или уменьшение количества реплик приложения https://kubernetes.io/docs/tasks/run-application/horizontal-pod-autoscale-walkthrough/
 
+<details>
+  <summary>Пример обьектов HorizontalPodAutoscaler</summary>
+
+```yaml
+apiVersion: autoscaling/v2
+kind: HorizontalPodAutoscaler # автоматическое увеличение или уменьшение количества реплик приложения
+metadata:
+  name: nginx-hpa
+spec:
+  scaleTargetRef:
+    apiVersion: apps/v1
+    kind: Deployment
+    name: nginx-deployment
+  minReplicas: 3
+  maxReplicas: 4
+  metrics:
+  - type: Resource
+    resource:
+      name: cpu
+      target:
+        type: Utilization
+        averageUtilization: 60
+```
+
+</details>
+
 ##### Сетевые функции
 
 - `service` одно DNS имя которым обьеденен набор pod (используя лейблы на pod) https://kubernetes.io/docs/concepts/services-networking/service/
@@ -137,10 +163,10 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: <insert-service-name-here> # одно DNS имя которым обьеденен набор pod (используя лейблы на pod в selector ниже)
+  name: nginx-service # одно DNS имя которым обьеденен набор pod (используя лейблы на pod в selector ниже)
 spec:
   selector:
-    app.kubernetes.io/name: <insert-lable-name-here> # выбирает pod по лейблу
+    app.kubernetes.io/name: nginx-deployment # выбирает pod по лейблу
   ports:
     - protocol: TCP
       port: 80
@@ -149,7 +175,6 @@ spec:
 
 </details>
 
-
 - `ingress` управляет внешним доступом к службам в кластере https://kubernetes.io/docs/concepts/services-networking/ingress/
 
 ##### Диски, конфигурация и секреты
@@ -157,86 +182,3 @@ spec:
 - persistent volumes https://kubernetes.io/docs/concepts/storage/persistent-volumes/
 - configmap https://kubernetes.io/docs/concepts/configuration/configmap/
 - secret https://kubernetes.io/docs/concepts/configuration/secret/
-
-<details>
-  <summary>Пример обьектов Kubenretes</summary>
-
-```yaml
----
-apiVersion: autoscaling/v2
-kind: HorizontalPodAutoscaler # автоматическое увеличение или уменьшение количества реплик приложения
-metadata:
-  name: nginx-echo-headers
-spec:
-  scaleTargetRef:
-    apiVersion: apps/v1
-    kind: Deployment
-    name: nginx-echo-headers
-  minReplicas: 3
-  maxReplicas: 4
-  metrics:
-  - type: Resource
-    resource:
-      name: cpu
-      target:
-        type: Utilization
-        averageUtilization: 50
----
-apiVersion: apps/v1
-kind: Deployment
-metadata:
-  name: nginx-echo-headers
-  labels: # используются для идентификации и выбора объектов
-    app.kubernetes.io/name: nginx-echo-headers
-    app.kubernetes.io/version: latest
-    app.kubernetes.io/component: nginx-echo-headers
-spec:
-#  replicas: 3 # можно удалить т.к. мы используем HPA который сам будет следить за числом реплик
-  selector:
-    matchLabels:
-      app.kubernetes.io/name: nginx-echo-headers
-  template:
-    metadata:
-      labels:
-        app.kubernetes.io/name: nginx-echo-headers
-    spec:
-      affinity:
-        podAntiAffinity:
-          preferredDuringSchedulingIgnoredDuringExecution: 
-          - weight: 100
-            podAffinityTerm:
-              labelSelector:
-                matchExpressions:
-                - key: app.kubernetes.io/name
-                  operator: In
-                  values:
-                  - nginx-echo-headers
-              topologyKey: "topology.kubernetes.io/zone"
-      terminationGracePeriodSeconds: 60
-      containers:
-      - name: nginx-echo-headers
-        image: brndnmtthws/nginx-echo-headers:latest
-        ports:
-        - name: http
-          containerPort: 8080
-        resources: 
-          requests:
-            memory: "150Mi"
-            cpu: "150m"
-          limits:
-            memory: "150Mi"
-        livenessProbe:
-          httpGet:
-            path: /
-            port: http
-          initialDelaySeconds: 5
-          periodSeconds: 5
-        readinessProbe:
-          httpGet:
-            path: /
-            port: http
-          initialDelaySeconds: 5
-          periodSeconds: 5
-```
-
-</details>
