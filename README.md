@@ -217,10 +217,10 @@ kind: ConfigMap
 metadata:
   name: game-demo
 data:
-  # property-like keys; each key maps to a simple value
+  # настройки вида ключ=знач; у каждого ключа есть свое значение
   player_initial_lives: "3"
   ui_properties_file_name: "user-interface.properties"
-  # file-like keys
+  # запись в виде файла game.properties который можно будет использовать в контейнерах
   game.properties: |
     enemy.types=aliens,monsters
     player.maximum-lives=5  
