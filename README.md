@@ -213,7 +213,7 @@ spec:
 
 ```yaml
 apiVersion: v1
-kind: ConfigMap
+kind: ConfigMap # имя конфигмапа по котрому мы будем его добавлять в pod
 metadata:
   name: nginx-configmap
 data:
