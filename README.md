@@ -215,7 +215,7 @@ spec:
 apiVersion: v1
 kind: ConfigMap
 metadata:
-  name: game-demo
+  name: nginx-configmap
 data:
   # настройки вида ключ=знач; у каждого ключа есть свое значение
   player_initial_lives: "3"
@@ -223,7 +223,7 @@ data:
   # запись в виде файла game.properties который можно будет использовать в контейнерах
   game.properties: |
     enemy.types=aliens,monsters
-    player.maximum-lives=5  
+    player.maximum-lives=5
 ```
 
 </details>
