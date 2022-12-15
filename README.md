@@ -68,6 +68,8 @@ metadata:
     app.kubernetes.io/name: nginx-deployment
     app.kubernetes.io/version: latest
     app.kubernetes.io/component: nginx-deployment
+  annotations:
+    imageregistry: "https://hub.docker.com/"
 spec:
   replicas: 3 # можно удалить если используем HPA который сам будет следить за числом реплик (описание и пример ниже)
   selector:
@@ -176,6 +178,32 @@ spec:
 </details>
 
 - `ingress` управляет внешним доступом к службам в кластере https://kubernetes.io/docs/concepts/services-networking/ingress/
+
+<details>
+  <summary>Пример обьекта Ingress</summary>
+
+```yaml
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: nginx-ingress
+  annotations:
+    nginx.ingress.kubernetes.io/rewrite-target: /
+spec:
+  ingressClassName: nginx-example
+  rules:
+  - http:
+      paths:
+      - path: /api/v1
+        pathType: Prefix
+        backend:
+          service:
+            name: nginx-service
+            port:
+              number: 80
+```
+
+</details>
 
 ##### Диски, конфигурация и секреты
 
