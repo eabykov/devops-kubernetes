@@ -1,24 +1,12 @@
-Kubernetes нужен для управления контейнеризованными рабочими нагрузками и сервисами
+### Kubernetes нужен для управления контейнеризованными рабочими нагрузками и сервисами
+
+>  оркестрации — это выполнение определенного рабочего процесса: сначала сделай A, затем B, затем C. Напротив, Kubernetes содержит набор независимых, компонуемых процессов управления, которые непрерывно переводит текущее состояние к предполагаемому состоянию. Неважно, как добраться от А до С. Это делает систему более простой в использовании, более мощной, надежной, устойчивой и расширяемой
+
 - при правильной настройке гарантирует отсутствие простоев
 - упрощает мониторинг сервисов и распределение нагрузки
 - автоматизированные развертывание (деплой сервисов), откаты при ошибках
 - автоматическое распределение нагрузки на имеющихся node (что такое node ниже) в зависимости от CPU и RAM требований
 - самоконтроль, перезапустит упавшие контейнеры, проверит что контейнеры работают как "нужно" и многое другое
-
-<details>
-  <summary>Установка Kubernetes локально</summary>
-
-1. Ставим себе Docker Desktop https://www.docker.com/products/docker-desktop/
-2. Ставим себе WSL (аналог виртуальной машины Linux на Windows) https://aka.ms/wslinstall
-3. Ставим себе Ubuntu в WSL из Microsoft Store https://apps.microsoft.com/store/search?publisher=Canonical%20Group%20Limited
-4. Перезапускаем компьютер
-5. Запускам Ubuntu и ждем завершение установки
-6. Запускаем Docker Desktop
-7. Подключаем Ubuntu к Docker Desctop. Для этого в его настройках переходим в раздел `Resorces` и там в `WSL Integration` включаем интеграцию с Ubuntu
-8. Включаем Kubernetes в настройках Docker Desctop (если хотим смотреть за прогрессом загрузки выходим из настроек и смотрим как появляются новые Images)
-9. Когда у нас иконка Kubernetes (штурвал от корабля) внизу станет зеленой это значит что мы можем зайти в Ubuntu и выполнить команду `kubectl version --short` которая должна вывести версию Kubernetes
-
-</details>
 
 ### Составляющие Kubernetes кластера
 
@@ -220,3 +208,18 @@ spec:
 - persistent volumes https://kubernetes.io/docs/concepts/storage/persistent-volumes/
 - configmap https://kubernetes.io/docs/concepts/configuration/configmap/
 - secret https://kubernetes.io/docs/concepts/configuration/secret/
+
+<details>
+  <summary>Установка Kubernetes локально</summary>
+
+1. Ставим себе Docker Desktop https://www.docker.com/products/docker-desktop/
+2. Ставим себе WSL (аналог виртуальной машины Linux на Windows) https://aka.ms/wslinstall
+3. Ставим себе Ubuntu в WSL из Microsoft Store https://apps.microsoft.com/store/search?publisher=Canonical%20Group%20Limited
+4. Перезапускаем компьютер
+5. Запускам Ubuntu и ждем завершение установки
+6. Запускаем Docker Desktop
+7. Подключаем Ubuntu к Docker Desctop. Для этого в его настройках переходим в раздел `Resorces` и там в `WSL Integration` включаем интеграцию с Ubuntu
+8. Включаем Kubernetes в настройках Docker Desctop (если хотим смотреть за прогрессом загрузки выходим из настроек и смотрим как появляются новые Images)
+9. Когда у нас иконка Kubernetes (штурвал от корабля) внизу станет зеленой это значит что мы можем зайти в Ubuntu и выполнить команду `kubectl version --short` которая должна вывести версию Kubernetes
+
+</details>
