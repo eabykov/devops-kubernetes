@@ -207,6 +207,27 @@ spec:
 
 - persistent volumes https://kubernetes.io/docs/concepts/storage/persistent-volumes/
 - configmap https://kubernetes.io/docs/concepts/configuration/configmap/
+
+<details>
+  <summary>Пример обьекта ConfigMap</summary>
+
+```yaml
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: game-demo
+data:
+  # property-like keys; each key maps to a simple value
+  player_initial_lives: "3"
+  ui_properties_file_name: "user-interface.properties"
+  # file-like keys
+  game.properties: |
+    enemy.types=aliens,monsters
+    player.maximum-lives=5  
+```
+
+</details>
+
 - secret https://kubernetes.io/docs/concepts/configuration/secret/
 
 <details>
