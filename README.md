@@ -1,4 +1,4 @@
-- [Установка Kubernetes локально](docs/LOCAL_INSTALL.mdLOCAL_INSTALL.md)
+[Установка Kubernetes локально](docs/LOCAL_INSTALL.mdLOCAL_INSTALL.md)
 
 ### Kubernetes нужен для управления контейнеризованными рабочими нагрузками и сервисами
 
