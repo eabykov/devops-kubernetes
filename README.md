@@ -26,6 +26,8 @@ https://kubernetes.io/ru/docs/concepts/overview/components/#плоскость-�
 
 <details>
 
+-
+
 <details>
   <summary>worker node (исполнительный уровень)</summary>
 
