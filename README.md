@@ -1,4 +1,4 @@
-- [Установка Kubernetes локально](docs/LOCAL_INSTALL.md)
+- [Установка Kubernetes локально](docs/LOCAL_INSTALL.mdLOCAL_INSTALL.md)
 
 ### Kubernetes нужен для управления контейнеризованными рабочими нагрузками и сервисами
 
@@ -12,18 +12,30 @@
 
 ### Составляющие Kubernetes кластера
 
-##### Из чего состоит (компоненты, составляющие) Kubernetes
+##### Из чего состоит Kubernetes (компоненты, составляющие)
 
-master node (управляющий уровень) https://kubernetes.io/ru/docs/concepts/overview/components/#плоскость-управления-компонентами
+<details>
+  <summary>master node (управляющий уровень)</summary>
+
+https://kubernetes.io/ru/docs/concepts/overview/components/#плоскость-управления-компонентами
+
 - `kube-apiserver` - клиентская часть панели управления Kubernetes
 - `etcd` - высоконадёжное хранилище данных в формате "ключ-значение", основное хранилище всех данных кластера в Kubernetes
 - `kube-scheduler` - отслеживает созданные поды без привязанного узла и выбирает узел, на котором они должны работать
 - `kube-controller-manager` - уведомляет и реагирует на сбои node, поддерживает правильное количество pod для каждого объекта контроллера репликации в системе,  связывает Services и Pods, создает стандартные учетные записи и токены доступа API для новых namespace
 
-worker node (исполнительный уровень) https://kubernetes.io/ru/docs/concepts/overview/components/#компоненты-узла
+<details>
+
+<details>
+  <summary>worker node (исполнительный уровень)</summary>
+
+https://kubernetes.io/ru/docs/concepts/overview/components/#компоненты-узла
+
 - `kubelet` - агент который следит за тем, чтобы контейнеры были запущены в поде
 - `kube-proxy` - конфигурирует правила сети на узлах (service), при помощи которых разрешаются сетевые подключения к вашими подам изнутри и снаружи кластера
 - `Среда выполнения контейнера` - это программа, предназначенная для выполнения контейнеров (Docker, containerd, CRI-O)
+
+<details>
 
 ##### Структура объектов и пространства имен
 
