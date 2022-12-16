@@ -221,8 +221,28 @@ spec:
 
 ##### Диски, конфигурация и секреты
 
-- persistent volumes https://kubernetes.io/docs/concepts/storage/persistent-volumes/
-- configmap https://kubernetes.io/docs/concepts/configuration/configmap/
+- `PersistentVolume` - запрос пользователя на храненилище данных (виртуальный диск для pod) https://kubernetes.io/docs/concepts/storage/persistent-volumes/
+
+<details>
+  <summary>Пример обьекта PersistentVolume</summary>
+
+```yaml
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: nginx-pvc
+spec:
+  capacity:
+    storage: 5Gi # обьем запрашиваемого диска
+  volumeMode: Filesystem
+  accessModes:
+    - ReadWriteOnce # режим доступа который разрешает нескольким pod получать доступ к pvc, когда pod запущены на одной node
+  storageClassName: slow # имя обьекта 'storageClass' который хранит параметры подключения к системе хранения данных (дисковым массивам и тд)
+```
+
+</details>
+
+- `ConfigMap` - для хранения неконфиденциальных данных в парах ключ-значение https://kubernetes.io/docs/concepts/configuration/configmap/
 
 <details>
   <summary>Пример обьекта ConfigMap</summary>
