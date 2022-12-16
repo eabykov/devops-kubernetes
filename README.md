@@ -37,15 +37,18 @@ https://kubernetes.io/ru/docs/concepts/overview/components/#компоненты
 
 </details>
 
-##### Структура объектов и пространства имен
+### Структура объектов и пространства имен
 
-- Kubernetes использует объекты для представления состояния кластера https://kubernetes.io/ru/docs/concepts/overview/working-with-objects/kubernetes-objects/
+<details>
+  <summary>Kubernetes использует объекты для представления состояния кластера</summary>
+
+https://kubernetes.io/ru/docs/concepts/overview/working-with-objects/kubernetes-objects/
 
 > Почти в каждом объекте Kubernetes есть два вложенных поля-объекта, которые управляют конфигурацией объекта:
 > - `spec` - требуемое состояние (описание характеристик, которые должны быть у объекта)
 > - `status` - текущее состояние
 
-### Основные обьекты
+</details>
 
 - `namespace` (пространство имен) - виртуальные кластера в одном физическом кластере Kubernetes, нужны чтобы изолировать группы обьектов в одном кластере (Имена ресурсов должны быть уникальными в пределах одного и того же namespace) 
 
@@ -61,7 +64,7 @@ metadata:
 
 </details>
 
-##### Запуск приложений, заданий и управление ими
+### Запуск приложений, заданий и управление ими
 
 > - labels (метки, этикетки) которые используются для идентификации и выбора объектов https://kubernetes.io/ru/docs/concepts/overview/working-with-objects/labels/
 > - annotations (аннотации) похожи на лейблы, но не используются для идентификации и выбора объектов https://kubernetes.io/ru/docs/concepts/overview/working-with-objects/annotations/
