@@ -171,7 +171,7 @@ spec:
 ##### Сетевые функции
 
 <details>
-  <summary>Service одно DNS имя которым обьеденен набор pod (используя лейблы на pod) для связи приложений внутри кластера</summary>
+  <summary>Service - одно DNS имя которым обьеденен набор pod (используя лейблы на pod) для связи приложений внутри кластера</summary>
 
 https://kubernetes.io/docs/concepts/services-networking/service/
 
@@ -192,7 +192,7 @@ spec:
 </details>
 
 <details>
-  <summary>Ingress для внешнего доступа (из интернета, сети офиса и тд) к приложениям в кластере</summary>
+  <summary>Ingress - для внешнего доступа (из интернета, сети офиса и тд) к приложениям в кластере</summary>
 
 https://kubernetes.io/docs/concepts/services-networking/ingress/
 
