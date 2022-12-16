@@ -1,5 +1,3 @@
-[Установка Kubernetes локально](docs/LOCAL_INSTALL.mdLOCAL_INSTALL.md)
-
 <details>
   <summary>Основные цели использования Kubernetes и какие проблемы он решает</summary>
 
@@ -283,3 +281,8 @@ data:
 ```
 
 </details>
+
+### Полезные ссылки
+
+1. Установка Kubernetes локально на Widnows с помощью WSL и Docker Desktop: [Установка Kubernetes локально](docs/LOCAL_INSTALL.md)
+2. Хорошее начальное руководство по Kubernetes: https://habr.com/ru/users/Anshelen/posts/
