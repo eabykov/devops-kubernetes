@@ -170,10 +170,10 @@ spec:
 
 ##### Сетевые функции
 
-- `service` одно DNS имя которым обьеденен набор pod (используя лейблы на pod) для связи приложений внутри кластера https://kubernetes.io/docs/concepts/services-networking/service/
-
 <details>
-  <summary>Пример обьекта Service</summary>
+  <summary>Service одно DNS имя которым обьеденен набор pod (используя лейблы на pod) для связи приложений внутри кластера</summary>
+
+https://kubernetes.io/docs/concepts/services-networking/service/
 
 ```yaml
 apiVersion: v1
@@ -191,10 +191,10 @@ spec:
 
 </details>
 
-- `ingress` для внешнего доступа (из интернета, сети офиса и тд) к приложениям в кластере https://kubernetes.io/docs/concepts/services-networking/ingress/
-
 <details>
-  <summary>Пример обьекта Ingress</summary>
+  <summary>Ingress для внешнего доступа (из интернета, сети офиса и тд) к приложениям в кластере</summary>
+
+https://kubernetes.io/docs/concepts/services-networking/ingress/
 
 ```yaml
 apiVersion: networking.k8s.io/v1
@@ -221,10 +221,10 @@ spec:
 
 ##### Диски, конфигурация и секреты
 
-- `PersistentVolume` - запрос пользователя на храненилище данных (виртуальный диск для pod) https://kubernetes.io/docs/concepts/storage/persistent-volumes/
-
 <details>
-  <summary>Пример обьекта PersistentVolume</summary>
+  <summary>PersistentVolume - запрос пользователя на храненилище данных (виртуальный диск для pod)</summary>
+
+https://kubernetes.io/docs/concepts/storage/persistent-volumes/
 
 ```yaml
 apiVersion: v1
@@ -241,10 +241,10 @@ spec:
 
 </details>
 
-- `ConfigMap` - для хранения неконфиденциальных данных в парах ключ-значение https://kubernetes.io/docs/concepts/configuration/configmap/
-
 <details>
-  <summary>Пример обьекта ConfigMap</summary>
+  <summary>ConfigMap - для хранения неконфиденциальных данных в парах ключ-значение</summary>
+
+https://kubernetes.io/docs/concepts/configuration/configmap/
 
 ```yaml
 apiVersion: v1
@@ -263,10 +263,10 @@ data:
 
 </details>
 
-- `secret` - небольшой объем конфиденциальных данных, таких как пароль, токен или ключ https://kubernetes.io/docs/concepts/configuration/secret/
-
 <details>
-  <summary>Пример обьекта Secret</summary>
+  <summary>Secret - небольшой объем конфиденциальных данных, таких как пароль, токен или ключ</summary>
+
+https://kubernetes.io/docs/concepts/configuration/secret/
 
 ```yaml
 apiVersion: v1
