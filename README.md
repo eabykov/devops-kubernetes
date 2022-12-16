@@ -234,10 +234,9 @@ metadata:
 spec:
   capacity:
     storage: 5Gi # обьем запрашиваемого диска
-  volumeMode: Filesystem
   accessModes:
     - ReadWriteOnce # режим доступа который разрешает нескольким pod получать доступ к pvc, когда pod запущены на одной node
-  storageClassName: slow # имя обьекта 'storageClass' который хранит параметры подключения к системе хранения данных (дисковым массивам и тд)
+  storageClassName: nginx-storageclass # имя обьекта 'storageClass' который хранит параметры подключения к системе хранения данных (дисковым массивам и тд)
 ```
 
 </details>
