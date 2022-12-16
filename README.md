@@ -288,4 +288,4 @@ data:
 ### Полезные ссылки
 
 1. [Установка Kubernetes локально](docs/LOCAL_INSTALL.md) на Windows с помощью WSL и Docker Desktop
-2. Хорошее начальное руководство по Kubernetes: https://habr.com/ru/users/Anshelen/posts/
+2. От Docker контейнера до автоматического деплоя в Kubernetes: https://habr.com/ru/users/Anshelen/posts/
