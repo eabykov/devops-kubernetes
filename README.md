@@ -284,5 +284,5 @@ data:
 
 ### Полезные ссылки
 
-1. Установка Kubernetes локально на Widnows с помощью WSL и Docker Desktop: [Установка Kubernetes локально](docs/LOCAL_INSTALL.md)
+1. [Установка Kubernetes локально](docs/LOCAL_INSTALL.md) на Windows с помощью WSL и Docker Desktop
 2. Хорошее начальное руководство по Kubernetes: https://habr.com/ru/users/Anshelen/posts/
