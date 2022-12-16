@@ -171,7 +171,7 @@ spec:
 ##### Сетевые функции
 
 <details>
-  <summary>Service - одно DNS имя которым обьеденен набор pod (используя лейблы на pod) для связи приложений внутри кластера</summary>
+  <summary>Service - для связи приложений внутри кластера, является DNS именем которым обьеденен набор pod (используя лейблы на pod)</summary>
 
 https://kubernetes.io/docs/concepts/services-networking/service/
 
