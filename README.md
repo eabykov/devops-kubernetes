@@ -228,10 +228,25 @@ data:
 
 </details>
 
-- secret https://kubernetes.io/docs/concepts/configuration/secret/
+- `secret` - небольшой объем конфиденциальных данных, таких как пароль, токен или ключ https://kubernetes.io/docs/concepts/configuration/secret/
 
 <details>
-  <summary>Установка Kubernetes локально</summary>
+  <summary>Пример обьекта Secret</summary>
+
+```yaml
+apiVersion: v1
+kind: Secret
+metadata:
+  name: nginx-secret # имя секрета по котрому мы его будем подключать в наши pod
+type: Opaque # тип: произвольные пользовательские данные (все типы https://kubernetes.io/docs/concepts/configuration/secret/#secret-types )
+data:
+  USER_NAME: aDm1n
+  PASSWORD: myStr0ngPa5SworD
+```
+
+</details>
+
+### Установка Kubernetes локально
 
 1. Ставим себе Docker Desktop https://www.docker.com/products/docker-desktop/
 2. Ставим себе WSL (аналог виртуальной машины Linux на Windows) https://aka.ms/wslinstall
@@ -242,5 +257,3 @@ data:
 7. Подключаем Ubuntu к Docker Desctop. Для этого в его настройках переходим в раздел `Resorces` и там в `WSL Integration` включаем интеграцию с Ubuntu
 8. Включаем Kubernetes в настройках Docker Desctop (если хотим смотреть за прогрессом загрузки выходим из настроек и смотрим как появляются новые Images)
 9. Когда у нас иконка Kubernetes (штурвал от корабля) внизу станет зеленой это значит что мы можем зайти в Ubuntu и выполнить команду `kubectl version --short` которая должна вывести версию Kubernetes
-
-</details>
