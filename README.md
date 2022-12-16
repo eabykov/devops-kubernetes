@@ -68,10 +68,12 @@ metadata:
 > - labels (метки, этикетки) которые используются для идентификации и выбора объектов https://kubernetes.io/ru/docs/concepts/overview/working-with-objects/labels/
 > - annotations (аннотации) похожи на лейблы, но не используются для идентификации и выбора объектов https://kubernetes.io/ru/docs/concepts/overview/working-with-objects/annotations/
 
-- deployment https://kubernetes.io/docs/concepts/workloads/controllers/deployment/
+- ReplicaSet - контроллер, позволяющий создать набор одинаковых pod и работать с ними, как с единой сущностью. Поддерживает нужное количество реплик, при необходимости создавая новые pod или убивая старые
 
 <details>
-  <summary>Пример обьекта Deployment</summary>
+  <summary>Deployment - контроллер развертывания (обновления pod), управляет ReplicaSet который является набором pod</summary>
+
+https://kubernetes.io/docs/concepts/workloads/controllers/deployment/
 
 ```yaml
 apiVersion: apps/v1
@@ -140,10 +142,11 @@ spec:
 - daemonset https://kubernetes.io/docs/concepts/workloads/controllers/daemonset/
 - `job` (задания) https://kubernetes.io/docs/concepts/workloads/controllers/job/
 - `cronjob` (задание по расписанию) https://kubernetes.io/docs/concepts/workloads/controllers/cron-jobs/
-- HPA автоматическое увеличение или уменьшение количества реплик приложения https://kubernetes.io/docs/tasks/run-application/horizontal-pod-autoscale-walkthrough/
 
 <details>
-  <summary>Пример обьектов HorizontalPodAutoscaler</summary>
+  <summary>HorizontalPodAutoscaler автоматическое увеличение или уменьшение количества реплик приложения</summary>
+
+https://kubernetes.io/docs/tasks/run-application/horizontal-pod-autoscale-walkthrough/
 
 ```yaml
 apiVersion: autoscaling/v2
@@ -168,7 +171,7 @@ spec:
 
 </details>
 
-##### Сетевые функции
+### Сетевые функции
 
 <details>
   <summary>Service - для связи приложений внутри кластера, является DNS именем которым обьеденен набор pod (используя лейблы на pod)</summary>
@@ -219,7 +222,7 @@ spec:
 
 </details>
 
-##### Диски, конфигурация и секреты
+### Диски, конфигурация и секреты
 
 <details>
   <summary>PersistentVolume - запрос пользователя на храненилище данных (виртуальный диск для pod)</summary>
