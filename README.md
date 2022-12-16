@@ -71,7 +71,7 @@ metadata:
 - ReplicaSet - создает набор одинаковых pod и работает с ними, как с единой сущностью. Поддерживает нужное количество реплик, при необходимости создавая новые pod или убивая старые
 
 <details>
-  <summary>Deployment - контроллер обновления ReplicaSet который является набором pod</summary>
+  <summary>Deployment - контролирует обновления ReplicaSet который является набором pod</summary>
 
 https://kubernetes.io/docs/concepts/workloads/controllers/deployment/
 
