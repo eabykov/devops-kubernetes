@@ -40,7 +40,7 @@ https://kubernetes.io/ru/docs/concepts/overview/components/#компоненты
 ### Структура объектов и пространства имен
 
 <details>
-  <summary>Kubernetes использует объекты для представления состояния кластера</summary>
+  <summary>Kubernetes использует объекты в формате YAML для представления состояния кластера</summary>
 
 https://kubernetes.io/ru/docs/concepts/overview/working-with-objects/kubernetes-objects/
 
