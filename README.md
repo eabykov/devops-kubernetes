@@ -63,10 +63,10 @@ metadata:
 > - labels (метки, этикетки) которые используются для идентификации и выбора объектов. Рекомендуемые лейблы https://kubernetes.io/ru/docs/concepts/overview/working-with-objects/common-labels/
 > - annotations (аннотации) похожи на лейблы, но не используются для идентификации и выбора объектов https://kubernetes.io/ru/docs/concepts/overview/working-with-objects/annotations/
 
-- `ReplicaSet` - создает набор одинаковых pod и работает с ними, как с единой сущностью. Поддерживает нужное количество реплик, при необходимости создавая новые pod или убивая старые
-
 <details>
   <summary>Deployment - контролирует обновления ReplicaSet который является набором pod</summary>
+
+Deployment создает `ReplicaSet`, который в свою очередь создает набор одинаковых pod и работает с ними, как с единой сущностью. Поддерживает нужное количество реплик, при необходимости создавая новые pod или убивая старые
 
 https://kubernetes.io/docs/concepts/workloads/controllers/deployment/
 
