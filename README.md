@@ -142,7 +142,41 @@ https://kubernetes.io/docs/concepts/workloads/controllers/deployment/
 StatefulSet в отличии от Deployment не создает ReplicaSet, а сам контролирует, обновляет и создает pod
 
 ```yaml
-
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: postgres
+spec:
+  selector:
+    matchLabels:
+      app: postgress # должно совпадать с .spec.template.metadata.labels
+  serviceName: "postgres"
+  replicas: 3 # по умолчанию '1'
+  minReadySeconds: 10 # по умолчанию '0'
+  template:
+    metadata:
+      labels:
+        app: postgres # должно совпадать с .spec.selector.matchLabels
+    spec:
+      terminationGracePeriodSeconds: 30
+      containers:
+      - name: postgres
+        image: postgres:14.6-alpine
+        ports:
+        - containerPort: 5432
+          name: dbport
+        volumeMounts:
+        - name: default-database
+          mountPath: /usr/share/postgres/database
+  volumeClaimTemplates:
+  - metadata:
+      name: default-database
+    spec:
+      accessModes: [ "ReadWriteOnce" ]
+      storageClassName: "my-storage-class-name"
+      resources:
+        requests:
+          storage: 5Gi
 ```
 
 https://kubernetes.io/docs/concepts/workloads/controllers/statefulset/
