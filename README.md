@@ -141,11 +141,61 @@ spec:
 
 - statefulset https://kubernetes.io/docs/concepts/workloads/controllers/statefulset/
 - daemonset https://kubernetes.io/docs/concepts/workloads/controllers/daemonset/
-- `job` (задания) https://kubernetes.io/docs/concepts/workloads/controllers/job/
-- `cronjob` (задание по расписанию) https://kubernetes.io/docs/concepts/workloads/controllers/cron-jobs/
 
 <details>
-  <summary>HorizontalPodAutoscaler автоматическое увеличение или уменьшение количества реплик приложения</summary>
+  <summary>Job - задание, запуск pod для выполнения единоразовой задачи, резервное сохранение данных или проверка</summary>
+
+https://kubernetes.io/docs/concepts/workloads/controllers/job/
+
+```yaml
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: nginx-busybox-job
+spec:
+  template:
+    spec:
+      containers:
+      - name: busybox
+        image: busybox:1.35.0
+        command: ["/bin/sleep", "10"] # спать 10 секунд, а потом завершить работу
+      restartPolicy: Never # при ошибке не перезапускать
+  backoffLimit: 4
+```
+
+</details>
+
+<details>
+  <summary>CronJob - задание по расписанию, то же что и Job только по расписанию</summary>
+
+https://kubernetes.io/docs/concepts/workloads/controllers/cron-jobs/
+
+```yaml
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: ngixn-cronjob
+spec:
+  schedule: "* * * * *" # расписание, в данном случае каждую минуту https://crontab.guru/
+  jobTemplate:
+    spec:
+      template:
+        spec:
+          containers:
+          - name: busybox
+            image: busybox:1.35.0
+            imagePullPolicy: IfNotPresent
+            command:
+            - /bin/sh
+            - -c
+            - date; echo Hello from the Kubernetes cluster
+          restartPolicy: OnFailure # попробовать еще раз если Job упадет
+```
+
+</details>
+
+<details>
+  <summary>HorizontalPodAutoscaler - автоматическое увеличение или уменьшение количества реплик приложения</summary>
 
 https://kubernetes.io/docs/tasks/run-application/horizontal-pod-autoscale-walkthrough/
 
