@@ -36,11 +36,11 @@ https://kubernetes.io/ru/docs/concepts/overview/components/#компоненты
 <details>
   <summary>Kubernetes использует объекты в формате YAML для представления состояния кластера</summary>
 
-https://kubernetes.io/ru/docs/concepts/overview/working-with-objects/kubernetes-objects/
-
 > Почти в каждом объекте Kubernetes есть два вложенных поля-объекта, которые управляют конфигурацией объекта:
 > - `spec` - требуемое состояние (описание характеристик, которые должны быть у объекта)
 > - `status` - текущее состояние
+
+https://kubernetes.io/ru/docs/concepts/overview/working-with-objects/kubernetes-objects/
 
 </details>
 
@@ -67,8 +67,6 @@ metadata:
   <summary>Deployment - контролирует обновления ReplicaSet который является набором pod</summary>
 
 Deployment создает `ReplicaSet`, который в свою очередь создает набор одинаковых pod и работает с ними, как с единой сущностью. Поддерживает нужное количество реплик, при необходимости создавая новые pod или убивая старые
-
-https://kubernetes.io/docs/concepts/workloads/controllers/deployment/
 
 ```yaml
 apiVersion: apps/v1
@@ -131,15 +129,27 @@ spec:
           periodSeconds: 5
 ```
 
+https://kubernetes.io/docs/concepts/workloads/controllers/deployment/
+
 </details>
 
-- statefulset https://kubernetes.io/docs/concepts/workloads/controllers/statefulset/
+<details>
+  <summary>StatefulSet - контролирует обновления ReplicaSet который является набором pod</summary>
+
+StatefulSet в отличии от Deployment не создает ReplicaSet, а сам контролирует, обновляет и создает pod
+
+```yaml
+
+```
+
+https://kubernetes.io/docs/concepts/workloads/controllers/statefulset/
+
+</details>
+
 - daemonset https://kubernetes.io/docs/concepts/workloads/controllers/daemonset/
 
 <details>
   <summary>Job - задание, запуск pod для выполнения единоразовой задачи, например резервное сохранение данных перед обновлением</summary>
-
-https://kubernetes.io/docs/concepts/workloads/controllers/job/
 
 ```yaml
 apiVersion: batch/v1
@@ -157,12 +167,12 @@ spec:
   backoffLimit: 4
 ```
 
+https://kubernetes.io/docs/concepts/workloads/controllers/job/
+
 </details>
 
 <details>
   <summary>CronJob - задание по расписанию, то же что и Job только по расписанию</summary>
-
-https://kubernetes.io/docs/concepts/workloads/controllers/cron-jobs/
 
 ```yaml
 apiVersion: batch/v1
@@ -186,12 +196,12 @@ spec:
           restartPolicy: OnFailure # попробовать еще раз если Job упадет
 ```
 
+https://kubernetes.io/docs/concepts/workloads/controllers/cron-jobs/
+
 </details>
 
 <details>
   <summary>HorizontalPodAutoscaler - автоматическое увеличение или уменьшение количества реплик приложения</summary>
-
-https://kubernetes.io/docs/tasks/run-application/horizontal-pod-autoscale-walkthrough/
 
 ```yaml
 apiVersion: autoscaling/v2
@@ -214,14 +224,14 @@ spec:
         averageUtilization: 60
 ```
 
+https://kubernetes.io/docs/tasks/run-application/horizontal-pod-autoscale-walkthrough/
+
 </details>
 
 ### Сетевые функции
 
 <details>
   <summary>Service - для связи приложений внутри кластера, является DNS именем которым обьеденен набор pod (используя лейблы на pod)</summary>
-
-https://kubernetes.io/docs/concepts/services-networking/service/
 
 ```yaml
 apiVersion: v1
@@ -237,12 +247,12 @@ spec:
       targetPort: http
 ```
 
+https://kubernetes.io/docs/concepts/services-networking/service/
+
 </details>
 
 <details>
   <summary>Ingress - для внешнего доступа (из интернета, сети офиса и тд) к приложениям в кластере</summary>
-
-https://kubernetes.io/docs/concepts/services-networking/ingress/
 
 ```yaml
 apiVersion: networking.k8s.io/v1
@@ -265,14 +275,14 @@ spec:
               number: 80
 ```
 
+https://kubernetes.io/docs/concepts/services-networking/ingress/
+
 </details>
 
 ### Диски, конфигурация и секреты
 
 <details>
   <summary>PersistentVolume - запрос пользователя на храненилище данных (виртуальный диск для pod)</summary>
-
-https://kubernetes.io/docs/concepts/storage/persistent-volumes/
 
 ```yaml
 apiVersion: v1
@@ -287,14 +297,14 @@ spec:
   storageClassName: nginx-storageclass # имя обьекта 'storageClass' который хранит параметры подключения к системе хранения данных (дисковым массивам и тд)
 ```
 
+https://kubernetes.io/docs/concepts/storage/persistent-volumes/
+
 </details>
 
 <details>
   <summary>ConfigMap - если нам нужно хранить какие-то данные в виде текстового файла</summary>
 
 По возможности лучше настраивать приложение через переменные среды в `env` как в примере с Deployment выше (это просто удобнее), а ConfigMap использовать если нужно настроить что-то сложное или приложение умеет работать только с конфигфайлом
-
-https://kubernetes.io/docs/concepts/configuration/configmap/
 
 ```yaml
 apiVersion: v1
@@ -311,14 +321,14 @@ data:
     player.maximum-lives=5
 ```
 
+https://kubernetes.io/docs/concepts/configuration/configmap/
+
 </details>
 
 <details>
   <summary>Secret - небольшой объем конфиденциальных данных, таких как пароль, токен или ключ</summary>
 
 Нужен чтобы удобно хранить секретные данные внутри Kubenrtes, пароли, логины, номера счетов и тд.
-
-https://kubernetes.io/docs/concepts/configuration/secret/
 
 ```yaml
 apiVersion: v1
@@ -330,6 +340,8 @@ data:
   USER_NAME: aDm1n
   PASSWORD: myStr0ngPa5SworD
 ```
+
+https://kubernetes.io/docs/concepts/configuration/secret/
 
 </details>
 
