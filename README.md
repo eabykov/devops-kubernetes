@@ -184,7 +184,9 @@ https://kubernetes.io/docs/concepts/workloads/controllers/statefulset/
 </details>
 
 <details>
-  <summary>DaemonSet - гарантирует, что все (или некоторые) noвуускают копию модуля</summary>
+  <summary>DaemonSet - гарантирует, что все (или некоторые) node имеют копию pod (используют обычно для мониторинга или сбора логов)</summary>
+
+Ниже пример запуска `Fluentd` который будет собирать логи контейнеров (и не только) и отправлять их в централизованный `Elasticsearch` для дальнейшего хранения, обработки и просмотра
 
 ```yaml
 apiVersion: apps/v1
@@ -197,15 +199,15 @@ metadata:
 spec:
   selector:
     matchLabels:
-      name: fluentd-elasticsearch
+      name: fluentd-elasticsearch # должно совпадать с .spec.template.metadata.labels (ниже)
   template:
     metadata:
       labels:
-        name: fluentd-elasticsearch
+        name: fluentd-elasticsearch # должно совпадать с .spec.selector.matchLabels (выше)
     spec:
       tolerations:
-      # these tolerations are to have the daemonset runnable on control plane nodes
-      # remove them if your control plane nodes should not run pods
+      # Эти tolerations (допуски) предназначены для того, чтобы набор демонов (pod) мог выполняться на master нодах
+      # Если мы не хотим запускать демонов (pod) на master нодах, то нужно удалить tolerations
       - key: node-role.kubernetes.io/control-plane
         operator: Exists
         effect: NoSchedule
@@ -214,7 +216,14 @@ spec:
         effect: NoSchedule
       containers:
       - name: fluentd-elasticsearch
-        image: quay.io/fluentd_elasticsearch/fluentd:v2.5.2
+        image: fluent/fluentd-kubernetes-daemonset:v1-debian-elasticsearch
+        env:
+          - name: FLUENT_ELASTICSEARCH_HOST
+            value: "elasticsearch.monitoring" # имя service и namespace в которых установлен Elasticsearch
+          - name: FLUENT_ELASTICSEARCH_PORT
+            value: "9200" # порт Elasticsearch service на который отправлять логи
+          - name: FLUENT_ELASTICSEARCH_SCHEME
+            value: "http" # по какому протоколу отправлять логи в Elasticsearch
         resources:
           limits:
             memory: 200Mi
