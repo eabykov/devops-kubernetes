@@ -143,7 +143,7 @@ spec:
 - daemonset https://kubernetes.io/docs/concepts/workloads/controllers/daemonset/
 
 <details>
-  <summary>Job - задание, запуск pod для выполнения единоразовой задачи, резервное сохранение данных или проверка</summary>
+  <summary>Job - задание, запуск pod для выполнения единоразовой задачи, например резервное сохранение данных перед обновлением</summary>
 
 https://kubernetes.io/docs/concepts/workloads/controllers/job/
 
