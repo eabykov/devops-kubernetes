@@ -60,8 +60,11 @@ metadata:
 
 ### Запуск приложений, заданий и управление ими
 
-> - labels (метки, этикетки) которые используются для идентификации и выбора объектов. Рекомендуемые лейблы https://kubernetes.io/ru/docs/concepts/overview/working-with-objects/common-labels/
+> - labels (метки, этикетки) которые используются для идентификации и выбора группы объектов. Рекомендуемые лейблы https://kubernetes.io/ru/docs/concepts/overview/working-with-objects/common-labels/
 > - annotations (аннотации) похожи на лейблы, но не используются для идентификации и выбора объектов https://kubernetes.io/ru/docs/concepts/overview/working-with-objects/annotations/
+
+`Pod` - один или нескольких контейнеров с общим хранилищем и сетевыми ресурсами, а также описывает спецификацию для запуска контейнеров
+> Pod, обычно, не создаются напрямую и создаются с использованием других ресурсов котоыре описаны ниже
 
 <details>
   <summary>Deployment - контролирует обновления ReplicaSet который является набором pod</summary>
