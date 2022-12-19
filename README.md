@@ -251,6 +251,7 @@ kind: Job
 metadata:
   name: nginx-busybox-job
 spec:
+  ttlSecondsAfterFinished: 300 # автоматически удалить Job после ее завершения через 300 сек 
   template:
     spec:
       containers:
@@ -339,6 +340,7 @@ spec:
     - protocol: TCP
       port: 80
       targetPort: http
+  internalTrafficPolicy: Local # чтобы трафик между сервисами шел в рамках одной node (если это возможно) 
 ```
 
 https://kubernetes.io/docs/concepts/services-networking/service/
