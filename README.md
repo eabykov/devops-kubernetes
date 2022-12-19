@@ -259,7 +259,7 @@ spec:
         image: busybox:1.35.0
         command: ["/bin/sleep", "10"] # спать 10 секунд, а потом завершить работу
       restartPolicy: Never # при ошибке не перезапускать
-  backoffLimit: 4
+  backoffLimit: 4 # количество повторных попыткок прежде чем job упадет
 ```
 
 https://kubernetes.io/docs/concepts/workloads/controllers/job/
