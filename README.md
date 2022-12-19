@@ -137,9 +137,7 @@ https://kubernetes.io/docs/concepts/workloads/controllers/deployment/
 </details>
 
 <details>
-  <summary>StatefulSet - контролирует обновления ReplicaSet который является набором pod</summary>
-
-StatefulSet в отличии от Deployment не создает ReplicaSet, а сам контролирует, обновляет и создает pod
+  <summary>StatefulSet - в отличии от Deployment не создает ReplicaSet, а сам контролирует, обновляет и создает набор pod</summary>
 
 ```yaml
 apiVersion: apps/v1
