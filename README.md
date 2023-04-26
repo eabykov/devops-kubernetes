@@ -224,6 +224,7 @@ spec:
             value: "http" # по какому протоколу отправлять логи в Elasticsearch
         resources:
           limits:
+            cpu: 250m
             memory: 200Mi
           requests:
             cpu: 100m
@@ -309,7 +310,7 @@ spec:
     kind: Deployment
     name: nginx-deployment
   minReplicas: 3
-  maxReplicas: 4
+  maxReplicas: 12
   metrics:
   - type: Resource
     resource:
