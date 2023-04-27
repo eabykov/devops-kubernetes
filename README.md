@@ -448,5 +448,7 @@ https://kubernetes.io/docs/concepts/configuration/secret/
 
 </details>
 
+### Что изучать дальше
+
 Charts (чарты) - это пакеты предварительно настроенных ресурсов Kubernetes. `Helm` управляет установкой, обновлением и настройкой чартов
 > Публичное хранилище Helm чартов https://artifacthub.io/
