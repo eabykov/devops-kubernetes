@@ -448,9 +448,5 @@ https://kubernetes.io/docs/concepts/configuration/secret/
 
 </details>
 
-### Полезные ссылки
-
-1. [Установка Kubernetes локально](docs/LOCAL_INSTALL.md) на Windows с помощью WSL и Docker Desktop
-2. От Docker контейнера до автоматического деплоя в Kubernetes: https://habr.com/ru/users/Anshelen/posts/
-3. Charts (чарты) - это пакеты предварительно настроенных ресурсов Kubernetes. `Helm` управляет установкой, обновлением и настройкой чартов
-   > Публичное хранилище Helm чартов https://artifacthub.io/
+Charts (чарты) - это пакеты предварительно настроенных ресурсов Kubernetes. `Helm` управляет установкой, обновлением и настройкой чартов
+> Публичное хранилище Helm чартов https://artifacthub.io/
