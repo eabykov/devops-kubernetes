@@ -448,10 +448,13 @@ https://kubernetes.io/docs/concepts/configuration/secret/
 
 </details>
 
-### Helm - помогает управлять приложениями Kubernetes
+### Helm - управляет установкой, обновлением и настройкой приложений с помощью charts в Kubernetes
 
-Helm Charts помогут вам настроить, установить и обновить даже самое сложное приложение Kubernetes. Charts легко создавать, версионировать, публиковать и делиться ими
+Charts - помогут вам настроить, установить и обновить даже самое сложное приложение Kubernetes, это пакеты предварительно настроенных ресурсов Kubernetes.
+Чарты легко создавать, версионировать, публиковать и делиться ими
 
-Charts (чарты) - это пакеты предварительно настроенных ресурсов Kubernetes. `Helm` управляет установкой, обновлением и настройкой чартов
+`Helm` управляет установкой, обновлением и настройкой чартов
 
-Пройти задание https://helm.sh/ru/docs/intro/quickstart/ 
+1. Пройти задание https://helm.sh/ru/docs/intro/quickstart/
+2. Установить Jira через helm в свой Kubernetes https://artifacthub.io/packages/helm/atlassian-data-center/jira
+   1. Найти как через service пробросить порт и открыть Jira в браузере
