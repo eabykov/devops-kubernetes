@@ -448,7 +448,10 @@ https://kubernetes.io/docs/concepts/configuration/secret/
 
 </details>
 
-### Что изучать дальше
+### Helm - помогает управлять приложениями Kubernetes
+
+Helm Charts помогут вам настроить, установить и обновить даже самое сложное приложение Kubernetes. Charts легко создавать, версионировать, публиковать и делиться ими
 
 Charts (чарты) - это пакеты предварительно настроенных ресурсов Kubernetes. `Helm` управляет установкой, обновлением и настройкой чартов
-> Публичное хранилище Helm чартов https://artifacthub.io/
+
+Пройти задание https://helm.sh/ru/docs/intro/quickstart/ 
