@@ -81,22 +81,22 @@ Deployment создает `ReplicaSet`, который в свою очеред�
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: nginx-deployment
+  name: nginx
   labels: # используются для идентификации и выбора объектов
-    app.kubernetes.io/name: nginx-deployment
+    app.kubernetes.io/name: nginx
     app.kubernetes.io/version: latest
-    app.kubernetes.io/component: nginx-deployment
+    app.kubernetes.io/component: nginx
   annotations:
     imageregistry: "https://hub.docker.com/"
 spec:
   replicas: 3 # можно удалить если используем HPA который сам будет следить за числом реплик (описание и пример ниже)
   selector:
     matchLabels:
-      app.kubernetes.io/name: nginx-deployment
+      app.kubernetes.io/name: nginx
   template:
     metadata:
       labels:
-        app.kubernetes.io/name: nginx-deployment
+        app.kubernetes.io/name: nginx
     spec:
       affinity:
         podAntiAffinity: # анти зависимость чтобы реплики pod разъехались по разным node
@@ -108,12 +108,12 @@ spec:
                 - key: app.kubernetes.io/name
                   operator: In
                   values:
-                  - nginx-deployment # создавать на node где нет pod с лейблом app.kubernetes.io/name: nginx-deployment
+                  - nginx # создавать на node где нет pod с лейблом app.kubernetes.io/name: nginx-deployment
               topologyKey: "topology.kubernetes.io/zone" # стараться размещать pod в разных зонах доступности
-      terminationGracePeriodSeconds: 60 # после отправки приложению сигнала 'Заверши работу' даем ему 60 сек закончить свою работу и умереть, иначе убиваем
+      terminationGracePeriodSeconds: 30 # после отправки приложению сигнала 'Заверши работу' даем ему 30 сек закончить свою работу и умереть, иначе убиваем
       containers:
       - name: nginx
-        image: nginx:latest
+        image: nginx:1.24-alpine-slim
         ports:
         - name: http
           containerPort: 8080
@@ -150,13 +150,16 @@ apiVersion: apps/v1
 kind: StatefulSet
 metadata:
   name: postgres
+  labels: # используются для идентификации и выбора объектов
+    app.kubernetes.io/name: postgres
+    app.kubernetes.io/version: 14.7-alpine
+    app.kubernetes.io/component: postgres
 spec:
   selector:
     matchLabels:
       app: postgress # должно совпадать с .spec.template.metadata.labels
   serviceName: "postgres"
-  replicas: 3 # по умолчанию '1'
-  minReadySeconds: 10 # по умолчанию '0'
+  replicas: 3
   template:
     metadata:
       labels:
@@ -165,7 +168,7 @@ spec:
       terminationGracePeriodSeconds: 30
       containers:
       - name: postgres
-        image: postgres:14.6-alpine
+        image: postgres:14.7-alpine
         ports:
         - containerPort: 5432
           name: dbport
@@ -198,16 +201,18 @@ kind: DaemonSet
 metadata:
   name: fluentd-elasticsearch
   namespace: kube-system
-  labels:
-    k8s-app: fluentd-logging
+  labels: # используются для идентификации и выбора объектов
+    app.kubernetes.io/name: fluentd
+    app.kubernetes.io/version: v1-debian-elasticsearch
+    app.kubernetes.io/component: fluentd
 spec:
   selector:
     matchLabels:
-      name: fluentd-elasticsearch # должно совпадать с .spec.template.metadata.labels (ниже)
+      app.kubernetes.io/name: fluentd # должно совпадать с .spec.template.metadata.labels (ниже)
   template:
     metadata:
       labels:
-        name: fluentd-elasticsearch # должно совпадать с .spec.selector.matchLabels (выше)
+        app.kubernetes.io/name: fluentd # должно совпадать с .spec.selector.matchLabels (выше)
     spec:
       tolerations:
       # Эти tolerations (допуски) предназначены для того, чтобы набор демонов (pod) мог выполняться на master node
@@ -256,14 +261,18 @@ https://kubernetes.io/docs/concepts/workloads/controllers/daemonset/
 apiVersion: batch/v1
 kind: Job
 metadata:
-  name: nginx-busybox-job
+  name: busybox-sleep
+  labels: # используются для идентификации и выбора объектов
+    app.kubernetes.io/name: busybox
+    app.kubernetes.io/version: 1.36.0
+    app.kubernetes.io/component: busybox
 spec:
   ttlSecondsAfterFinished: 300 # автоматически удалить Job после ее завершения через 300 сек 
   template:
     spec:
       containers:
       - name: busybox
-        image: busybox:1.35.0
+        image: busybox:1.36.0
         command: ["/bin/sleep", "10"] # спать 10 секунд, а потом завершить работу
       restartPolicy: Never # при ошибке не перезапускать
   backoffLimit: 4 # количество повторных попыток прежде чем job упадет
@@ -280,7 +289,11 @@ https://kubernetes.io/docs/concepts/workloads/controllers/job/
 apiVersion: batch/v1
 kind: CronJob
 metadata:
-  name: nginx-cronjob
+  name: busybox-date
+  labels: # используются для идентификации и выбора объектов
+    app.kubernetes.io/name: busybox
+    app.kubernetes.io/version: 1.36.0
+    app.kubernetes.io/component: busybox
 spec:
   schedule: "* * * * *" # расписание, в данном случае каждую минуту https://crontab.guru/
   jobTemplate:
@@ -289,7 +302,7 @@ spec:
         spec:
           containers:
           - name: busybox
-            image: busybox:1.35.0
+            image: busybox:1.36.0
             imagePullPolicy: IfNotPresent
             command:
             - /bin/sh
@@ -309,12 +322,16 @@ https://kubernetes.io/docs/concepts/workloads/controllers/cron-jobs/
 apiVersion: autoscaling/v2
 kind: HorizontalPodAutoscaler # автоматическое увеличение или уменьшение количества реплик приложения
 metadata:
-  name: nginx-hpa
+  name: nginx
+  labels: # используются для идентификации и выбора объектов
+    app.kubernetes.io/name: nginx
+    app.kubernetes.io/version: 1.24-alpine-slim
+    app.kubernetes.io/component: nginx
 spec:
   scaleTargetRef:
     apiVersion: apps/v1
     kind: Deployment
-    name: nginx-deployment
+    name: nginx
   minReplicas: 3
   maxReplicas: 12
   metrics:
@@ -339,15 +356,18 @@ https://kubernetes.io/docs/tasks/run-application/horizontal-pod-autoscale-walkth
 apiVersion: v1
 kind: Service
 metadata:
-  name: nginx-service # одно DNS имя которым объединён набор pod (используя лейблы на pod в selector ниже)
+  name: nginx # одно DNS имя которым объединён набор pod (используя лейблы на pod в selector ниже)
+  labels: # используются для идентификации и выбора объектов
+    app.kubernetes.io/name: nginx
+    app.kubernetes.io/version: 1.24-alpine-slim
+    app.kubernetes.io/component: nginx
 spec:
   selector:
-    app.kubernetes.io/name: nginx-deployment # выбирает pod по лейблу
+    app.kubernetes.io/name: nginx # выбирает pod по лейблу
   ports:
     - protocol: TCP
       port: 80
       targetPort: http
-  internalTrafficPolicy: Local # чтобы трафик между сервисами шел в рамках одной node (если это возможно) 
 ```
 
 https://kubernetes.io/docs/concepts/services-networking/service/
@@ -361,11 +381,15 @@ https://kubernetes.io/docs/concepts/services-networking/service/
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
-  name: nginx-ingress
+  name: nginx
+  labels: # используются для идентификации и выбора объектов
+    app.kubernetes.io/name: nginx
+    app.kubernetes.io/version: 1.24-alpine-slim
+    app.kubernetes.io/component: nginx
   annotations:
     nginx.ingress.kubernetes.io/rewrite-target: /
 spec:
-  ingressClassName: nginx-example
+  ingressClassName: nginx-external
   rules:
   - http:
       paths:
@@ -373,7 +397,7 @@ spec:
         pathType: Prefix
         backend:
           service:
-            name: nginx-service
+            name: nginx
             port:
               number: 80
 ```
@@ -391,13 +415,17 @@ https://kubernetes.io/docs/concepts/services-networking/ingress/
 apiVersion: v1
 kind: PersistentVolume
 metadata:
-  name: nginx-pvc
+  name: postgres
+  labels: # используются для идентификации и выбора объектов
+    app.kubernetes.io/name: postgres
+    app.kubernetes.io/version: 14.7-alpine
+    app.kubernetes.io/component: postgres
 spec:
   capacity:
     storage: 5Gi # объем запрашиваемого диска
   accessModes:
     - ReadWriteOnce # режим доступа который разрешает нескольким pod получать доступ к pvc, когда pod запущены на одной node
-  storageClassName: nginx-storageclass # имя объекта 'storageClass' который хранит параметры подключения к системе хранения данных (дисковым массивам и тд)
+  storageClassName: postgres-ssd # имя объекта 'storageClass' который хранит параметры подключения к системе хранения данных (дисковым массивам и тд)
 ```
 
 https://kubernetes.io/docs/concepts/storage/persistent-volumes/
@@ -414,14 +442,20 @@ apiVersion: v1
 kind: ConfigMap
 metadata:
   name: nginx-configmap # имя конфигмапа по которому мы будем его добавлять в pod
+  labels: # используются для идентификации и выбора объектов
+    app.kubernetes.io/name: nginx
+    app.kubernetes.io/version: 1.24-alpine-slim
+    app.kubernetes.io/component: nginx
 data:
-  # настройки вида ключ=знач; у каждого ключа есть свое значение
-  player_initial_lives: "3"
-  ui_properties_file_name: "user-interface.properties"
-  # запись в виде файла game.properties который можно будет использовать в контейнерах
-  game.properties: |
-    enemy.types=aliens,monsters
-    player.maximum-lives=5
+  nginx.conf: |
+    server {
+      listen       80;
+      server_name  localhost;
+      location / {
+          root   /usr/share/nginx/html;
+          index  index.html index.htm;
+      }
+    }
 ```
 
 https://kubernetes.io/docs/concepts/configuration/configmap/
@@ -437,7 +471,11 @@ https://kubernetes.io/docs/concepts/configuration/configmap/
 apiVersion: v1
 kind: Secret
 metadata:
-  name: nginx-secret # имя секрета по которому мы его будем подключать в наши pod
+  name: nginx # имя секрета по которому мы его будем подключать в наши pod
+  labels: # используются для идентификации и выбора объектов
+    app.kubernetes.io/name: nginx
+    app.kubernetes.io/version: 1.24-alpine-slim
+    app.kubernetes.io/component: nginx
 type: Opaque # тип: произвольные пользовательские данные (все типы https://kubernetes.io/docs/concepts/configuration/secret/#secret-types )
 data:
   USER_NAME: aDm1n
