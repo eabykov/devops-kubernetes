@@ -502,19 +502,19 @@ Charts (схемы) - помогут вам настроить, установи
 1. Чтобы при обновлении всегда было минимальное количество pod такое же как в `spec.replicas` нужно выставить: `spec.strategy.rollingUpdate.maxUnavailable: 0`
 2. Настройте Readiness и Startup пробы чтобы избежать ошибок таких как отправка трафика на pod приложение в котором еще не запущенно (Liveness нужно ставить только в том случае если лучше что можно сделать это убить контейнер)
 3. Для того чтобы k8s успел убрать pod и endpoint для service перед отправкой SIGTERM сигнала необходимо добавить sleep перед остановкой (который значительно меньше `terminationGracePeriodSeconds`):
-  ```yaml
-  spec:
-    template:
-      spec:
-        terminationGracePeriodSeconds: 30
-        containers:
-        - lifecycle:
-            preStop:
-              exec:
-                command:
-                - sleep
-                - "10"
-  ```
+    ```yaml
+    spec:
+      template:
+        spec:
+          terminationGracePeriodSeconds: 30
+          containers:
+          - lifecycle:
+              preStop:
+                exec:
+                  command:
+                  - sleep
+                  - "10"
+    ```
 4. Не забывайте выставлять limits и requests для ваших контейнеров в pod чтобы k8s использовал requests для планирования, а limits для ограничения конкуренции за ресурсов на node (простой способ как подобрать написано выше в Deployment) 
 5. Настройте HPA для вашего Deployment с запасом 2х от текущей нагрузки (по результатам нагрузочного тестирования)
    > С пиковой дневной нагрузкой за 7 дней справляются 6 pod, выставляем `maxReplicas: 12` (смотрим чтобы не было блокеров, например чтобы не закончились подключения к БД и тд)
