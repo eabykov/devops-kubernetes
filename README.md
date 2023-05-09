@@ -490,12 +490,12 @@ https://kubernetes.io/docs/concepts/configuration/secret/
 
 Charts (схемы) - помогут вам настроить, установить и обновить даже самое сложное приложение Kubernetes, это пакеты предварительно настроенных ресурсов Kubernetes.
 Чарты легко создавать, версионировать, публиковать и делиться ими
-
-`Helm` управляет установкой, обновлением и настройкой чартов
+> В пункте 2.2 ниже вы можете посмотреть пример чарта с помощью которого можно установить Jira в k8s кластере одной командой и также потом обновлять
 
 1. Пройти задание https://helm.sh/ru/docs/intro/quickstart/
 2. Установить Jira через helm в свой Kubernetes https://artifacthub.io/packages/helm/atlassian-data-center/jira
-   1. Найти как через service пробросить порт и открыть Jira в браузере
+   1. Найти как из service или из pod пробросить порт и открыть Jira в браузере
+   2. Посмотреть из каких файлов состоит чарт: https://github.com/atlassian/data-center-helm-charts/tree/main/src/main/charts/jira
 
 ### Нулевое время простоя при обновлении Deployment (zero downtime Deployment)
 
