@@ -504,7 +504,8 @@ Charts (схемы) - помогут вам настроить, установи
 3. Встроенные переменные в helm: https://github.com/helm/helm-www/blob/main/content/en/docs/chart_template_guide/builtin_objects.md
    > Например проверить есть ли api `apps/v1` для ресурса `Deployment`: `{{- if .Capabilities.APIVersions.Has "apps/v1/Deployment" }}`
 
-### Нулевое время простоя при обновлении Deployment (zero downtime Deployment)
+<details>
+  <summary>Нулевое время простоя при обновлении Deployment (zero downtime Deployment)</summary>
 
 1. Чтобы при обновлении всегда было минимальное количество pod такое же как в `spec.replicas` нужно выставить: `spec.strategy.rollingUpdate.maxUnavailable: 0`
 2. Настройте Readiness и Startup пробы чтобы избежать ошибок таких как отправка трафика на pod приложение в котором еще не запущенно (Liveness нужно ставить только в том случае если лучше что можно сделать это убить контейнер)
@@ -529,3 +530,5 @@ Charts (схемы) - помогут вам настроить, установи
    - когда HPA уменьшает количество pod 
    - удалении старых pod при обновлении
    > Как настроить в istio https://istio.io/latest/docs/concepts/traffic-management/#retries или в linkerd https://linkerd.io/2.13/tasks/configuring-retries/
+
+</details>
