@@ -516,12 +516,13 @@ Charts (схемы) - помогут вам настроить, установи
         spec:
           terminationGracePeriodSeconds: 30
           containers:
-          - lifecycle:
+            lifecycle:
               preStop:
                 exec:
                   command:
-                  - sleep
-                  - "10"
+                    - /bin/sh
+                    - '-c'
+                    - sleep 15
     ```
 4. Не забывайте выставлять limits и requests для ваших контейнеров в pod чтобы k8s использовал requests для планирования, а limits для ограничения конкуренции за ресурсов на node (простой способ как подобрать написано выше в Deployment) 
 5. Настройте HPA для вашего Deployment с запасом 2х от текущей нагрузки (по результатам нагрузочного тестирования)
