@@ -505,6 +505,58 @@ Charts (схемы) - помогут вам настроить, установи
    > Например проверить есть ли api `apps/v1` для ресурса `Deployment`: `{{- if .Capabilities.APIVersions.Has "apps/v1/Deployment" }}`
 
 <details>
+  <summary>В Dockerfle смена пользователя с root на appuser</summary>
+
+1. Изменения в Dockerfile:
+```Dockerfile
+FROM python:3.11-slim-buster
+
+WORKDIR /opt/apple/myapp
+
+### Создаем пользователя, должно быть ниже чем WORKDIR ###
+RUN adduser \
+    --disabled-password \
+    --gecos "" \
+    --home "$(pwd)" \
+    --no-create-home \
+    --uid 1995 \
+    appuser
+
+### В инструкции COPY добавить --chown=1995:1995 ###
+COPY --chown=1995:1995 requirements.txt .
+RUN pip install --no-cache-dir --requirement requirements.txt \
+    && rm -rfv requirements.txt
+COPY --chown=1995:1995 app.py entrypoint.sh ./
+COPY --chown=1995:1995 static ./
+
+### Изменяем пользователя с root на appuser ###
+RUN chown 1995:1995 -R /opt
+USER appuser
+
+ENTRYPOINT ["/bin/sh", "-c", "/entrypoint.sh"]
+CMD ["-s", "all"]
+```  
+2. Для pod в Kubernetes задаем `securityContext`:
+```yaml
+securityContext:
+  allowPrivilegeEscalation: false
+  runAsNonRoot: true
+  runAsUser: 1995
+  runAsGroup: 1995
+  fsGroup: 1995
+```
+3. Протетированно в образах:
+   - alpine:3.18
+   - node:16.20.0-alpine
+   - golang:alpine3.18
+   - python:3.11
+   - python:3.11-slim-buster
+   - nginx:1.25
+   - golang:1.20.5
+
+</details>
+
+<details>
   <summary>Нулевое время простоя при обновлении Deployment (zero downtime Deployment)</summary>
 
 1. Чтобы при обновлении всегда было минимальное количество pod такое же как в `spec.replicas` нужно выставить: `spec.strategy.rollingUpdate.maxUnavailable: 0`
