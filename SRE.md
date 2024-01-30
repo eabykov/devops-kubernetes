@@ -1,3 +1,5 @@
+Краткий перевод: https://sre.google/resources/practices-and-processes/twenty-years-of-sre-lessons-learned/ 
+
 # 11 важных уроков которые вынесли SRE google за 20 лет работы
 
 1. Степень риска действий принимаемых по устранению инцидента не должна быть выше степени влияния инцидента
