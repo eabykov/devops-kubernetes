@@ -1,4 +1,4 @@
-# **Все уроки переехали в: [Курс обучения DevOps](https://eabykov.github.io/devops-v2/)**
+# **Все уроки переехали в: [Курс обучения DevOps](https://eabykov.github.io/devops/)**
 
 Посмотреть видео: https://youtu.be/klmpiHLSuXA
 
